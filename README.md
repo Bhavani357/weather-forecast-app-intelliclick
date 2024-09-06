@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
+# Weather-forecast-Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Setup:
 
-Currently, two official plugins are available:
+1. Make sure you have [pnpm](https://pnpm.io/) installed on your system. If not, you can install it by running the following command:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+   ```bash
+   npm install -g pnpm
+   ```
 
-## Expanding the ESLint configuration
+2. ```bash
+      pnpm install
+   ```
+3. ```bash
+      pnpm run dev
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Folder Structure
 
-- Configure the top-level `parserOptions` property like this:
+Here is the  folder structure of the Weather-forecast-app project:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
 ```
+weather-forecast-app/
+│
+├── public/
+│   └── index.html
+├── src/
+│   ├── api/
+│   │   └── citiesApi.ts            
+│   ├── components/
+│   │   ├── CityTable.tsx         
+│   │   ├── SearchBar.tsx         
+│   │   └──          
+│   ├── context/
+│   │   └── CitiesContext.tsx       
+│   ├── hooks/
+│   │   └── useCitySearch.ts  
+│   ├── pages/
+│   │   ├── CityWeather.tsx       
+│   │   ├── Home.tsx     
+│   ├── types/
+│   │   └── city.ts          
+│   |          
+│   ├── App.css                   
+│   ├── App.tsx                
+│   ├── main.tsx                  
+│   └── index.css              
+├── .gitignore            
+├── eslint.config.js                 
+├── index.html                
+└── package.json 
+└── pnpm-lock.yaml 
+└── README.md
+└── tailwind.config.js
+└── tsconfig.app.json
+└── tsconfig.json
+└── tsconfig.node.json
+└── vite.config.ts                      
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
