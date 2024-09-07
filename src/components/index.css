@@ -1,0 +1,74 @@
+.heading{
+  color: rgb(93, 54, 129);
+  text-align: center;
+}
+
+.active-btn{
+    background-color: rgb(93, 54, 129);
+    color: aliceblue;
+    border: 1px solid blueviolet;
+}
+
+table{
+  width: 100%;
+}
+tr th{
+  text-align: left;
+  background-color: blue;
+  padding: 10px;
+  color: white;
+}
+tr td{
+  padding: 10px;
+}
+tr:nth-child(even){
+  background-color: lightgray;
+}
+tr:hover{
+  background-color: gray;
+}
+select{
+  padding: 10px;
+}
+.column-heading{
+    display: flex;
+    justify-content: space-between;
+}
+.arrow-downUp{
+    cursor: pointer;
+}
+
+/* Ensure that table header icons are aligned */
+.column-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Container for the icons in the table header */
+.icons-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Filter icon style */
+.filter-icon {
+  cursor: pointer;
+  font-size: 24px;
+  margin-left: 8px; /* Space between sort icon and filter icon */
+}
+
+
+/* Filter container */
+.filter-container {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.popup-container{
+  display: flex;
+}
+.popup-hidden{
+  display: none;
+}

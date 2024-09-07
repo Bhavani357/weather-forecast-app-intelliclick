@@ -1,6 +1,6 @@
 export interface City {
     name: string;
-    country: string;
+    cou_name_en: string;
     timezone: string;
     population: number;
   }
