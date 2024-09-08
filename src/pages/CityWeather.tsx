@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { WeatherData } from '../types/city';
 import './index.css';
 
-const apiKey = import.meta.env.VITE_API_KEY;
+// const apiKey = import.meta.env.VITE_API_KEY;
 
 const CityWeather: React.FC = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const CityWeather: React.FC = () => {
   });
   const [message, setMessage] = useState<string | null>(null);
 
-  const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${name}&units=${unit}&appid=${apiKey}`;
+  const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${name}&units=${unit}&appid=da7c7ba0320bab6c429c8539a30757c9`;
 
   useEffect(() => {
     const fetchWeather = async () => {
