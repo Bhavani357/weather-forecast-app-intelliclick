@@ -16,7 +16,7 @@ const CityWeather: React.FC = () => {
     const saved = localStorage.getItem('favorites');
     return saved ? JSON.parse(saved) : [];
   });
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
 
   const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${name}&units=${unit}&appid=${apiKey}`;
 
@@ -48,11 +48,29 @@ const CityWeather: React.FC = () => {
   };
 
   const addToFavorites = () => {
+    if (favorites.includes(name!)) {
+      setMessage('This city is already in your favorites.');
+      setTimeout(() => setMessage(null), 3000); // Hide message after 3 seconds
+      return;
+    }
     const updatedFavorites = [...favorites, name!];
     setFavorites(updatedFavorites);
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-    setSuccessMessage(`"${name}" has been added to favorites!`);
-    setTimeout(() => setSuccessMessage(null), 3000); // Hide message after 3 seconds
+    setMessage('City added to favorites!');
+    setTimeout(() => setMessage(null), 3000); // Hide message after 3 seconds
+  };
+
+  const removeFromFavorites = () => {
+    if (!favorites.includes(name!)) {
+      setMessage('This city is not in your favorites.');
+      setTimeout(() => setMessage(null), 3000); // Hide message after 3 seconds
+      return;
+    }
+    const updatedFavorites = favorites.filter(city => city !== name);
+    setFavorites(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    setMessage('City removed from favorites!');
+    setTimeout(() => setMessage(null), 3000); // Hide message after 3 seconds
   };
 
   const getWeatherColor = (description: string) => {
@@ -72,8 +90,11 @@ const CityWeather: React.FC = () => {
         <>
           <h2 className="city-name">Weather in {name}</h2>
           {weatherData && (
-            <div className="weather-info">
-              <div className="current-weather" style={{ backgroundColor: getWeatherColor(weatherData.current.weather[0].description) }}>
+            <div>
+              <div
+                className="current-weather"
+                style={{ backgroundColor: getWeatherColor(weatherData.current.weather[0].description) }}
+              >
                 <h3>Current Weather</h3>
                 <p>Temperature: {weatherData.current.temp}°{unit === 'metric' ? 'C' : 'F'}</p>
                 <p>Condition: {weatherData.current.weather[0].description}</p>
@@ -81,7 +102,7 @@ const CityWeather: React.FC = () => {
                 <p>Wind Speed: {weatherData.current.wind_speed} m/s</p>
                 <p>Pressure: {weatherData.current.pressure} hPa</p>
               </div>
-              <div className="forecast">
+              <div>
                 <h3>5-day Forecast</h3>
                 {weatherData.forecast.map((day, index) => (
                   <div
@@ -99,8 +120,15 @@ const CityWeather: React.FC = () => {
               <button onClick={toggleUnit} className="toggle-unit-btn">
                 Switch to {unit === 'metric' ? 'Imperial' : 'Metric'}
               </button>
-              <button onClick={addToFavorites} className="favorites-btn">Add to Favorites</button>
-              {successMessage && <p className="success-message">{successMessage}</p>}
+              <button onClick={addToFavorites} className="favorites-btn">
+                Add to Favorites
+              </button>
+              {favorites.includes(name!) && (
+                <button onClick={removeFromFavorites} className="favorites-btn">
+                  Remove from Favorites
+                </button>
+              )}
+              {message && <p className="favorites-message">{message}</p>}
             </div>
           )}
         </>
