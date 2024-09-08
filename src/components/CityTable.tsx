@@ -5,6 +5,7 @@ import { City } from '../types/city';
 import { ArrowDownUp, Filter, X as XMarkIcon } from 'lucide-react';
 
 import './index.css';
+import { Link } from 'react-router-dom';
 
 type SortOrder = 'asc' | 'desc' | null;
 
@@ -212,13 +213,13 @@ export const CityTable: React.FC = () => {
                     ref={isLastCity ? lastCityRef : null} // Attach ref to last city for infinite scroll
                   >
                     <td>
-                      <a
-                        href={`/weather/${city.name}`}
+                      <Link
+                        to={`/weather/${city.name}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         {city.name}
-                      </a>
+                      </Link>
                     </td>
                     <td>{city.cou_name_en}</td>
                     <td>{city.timezone}</td>
