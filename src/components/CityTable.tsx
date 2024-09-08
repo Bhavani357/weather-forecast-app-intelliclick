@@ -24,6 +24,7 @@ export const CityTable: React.FC = () => {
   const lastCityRef = useRef<HTMLTableRowElement | null>(null);
   const [filters, setFilters] = useState<Partial<Record<keyof City, string>>>({});
   const [popupFilter, setPopupFilter] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null); // Ref for the input field
   
   const loadedPages = useRef<Set<number>>(new Set());
 
@@ -130,103 +131,111 @@ export const CityTable: React.FC = () => {
     }));
   };
 
+  useEffect(() => {
+    if (popupFilter && inputRef.current) {
+      inputRef.current.focus(); // Focus the input field when the popup is shown
+    }
+  }, [popupFilter]);
+
   return (
-    <div>
+    <div className="main-container">
       {popupFilter && (
         <div className='popup-container'>
-          <input type='text' value={filters['name'] || ''}
-              onChange={(e) => handleFilterChange('name', e.target.value)}
-              className='popup-input'
-              placeholder="Filter by name"/> 
-          <XMarkIcon onClick={togglePopupFilter}/>
+          <input 
+            ref={inputRef} // Attach ref to the input element
+            type='text' 
+            value={filters['name'] || ''}
+            className='popup-input'
+            onChange={(e) => handleFilterChange('name', e.target.value)}
+            placeholder="Filter by cityName"
+          /> 
+          <XMarkIcon className='icon' onClick={togglePopupFilter}/>
         </div>
       )}
-      <div className="main-container">
-        <table className="table">
-          <thead>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>
+              <div className='column-heading'>
+                <div>City Name</div>
+                <div className='icons-container'>
+                  <ArrowDownUp
+                    className='arrow-downUp'
+                    onClick={() => handleSort('name')}
+                  />
+                  <Filter
+                    className='filter-icon'
+                    onClick={togglePopupFilter}
+                  />
+                </div>
+              </div>
+            </th>
+            <th onClick={() => handleSort('cou_name_en')}>
+              <div className='column-heading'>
+                <div>Country</div>
+                <div className='icons-container'>
+                  <ArrowDownUp
+                    className='arrow-downUp'
+                    onClick={() => handleSort('cou_name_en')}
+                  />
+                </div>
+              </div>
+            </th>
+            <th onClick={() => handleSort('timezone')}>
+              <div className='column-heading'>
+                <div>Timezone</div>
+                <div className='icons-container'>
+                  <ArrowDownUp
+                    className='arrow-downUp'
+                    onClick={() => handleSort('timezone')}
+                  />
+                </div>
+              </div>
+            </th>
+            <th onClick={() => handleSort('population')}>
+              <div className='column-heading'>
+                <div>Population</div>
+                <div className='icons-container'>
+                  <ArrowDownUp
+                    className='arrow-downUp'
+                    onClick={() => handleSort('population')}
+                  /> 
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredCities.length > 0 ? (
+            filteredCities.map((city: City, index: number) => {
+              const isLastCity = index === filteredCities.length - 1;
+              return (
+                <tr
+                  key={`${city.name}-${index}`}
+                  ref={isLastCity ? lastCityRef : null} // Attach ref to last city for infinite scroll
+                >
+                  <td>
+                    <Link
+                      to={`/weather/${city.name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {city.name}
+                    </Link>
+                  </td>
+                  <td>{city.cou_name_en}</td>
+                  <td>{city.timezone}</td>
+                  <td>{city.population}</td>
+                </tr>
+              );
+            })
+          ) : (
             <tr>
-              <th>
-                <div className='column-heading'>
-                  <div>City Name</div>
-                  <div className='icons-container'>
-                    <ArrowDownUp
-                      className='arrow-downUp'
-                      onClick={() => handleSort('name')}
-                    />
-                    <Filter
-                      className='filter-icon'
-                      onClick={togglePopupFilter}
-                    />
-                  </div>
-                </div>
-              </th>
-              <th onClick={() => handleSort('cou_name_en')}>
-                <div className='column-heading'>
-                  <div>Country</div>
-                  <div className='icons-container'>
-                    <ArrowDownUp
-                      className='arrow-downUp'
-                      onClick={() => handleSort('cou_name_en')}
-                    />
-                  </div>
-                </div>
-              </th>
-              <th onClick={() => handleSort('timezone')}>
-                <div className='column-heading'>
-                  <div>Timezone</div>
-                  <div className='icons-container'>
-                    <ArrowDownUp
-                      className='arrow-downUp'
-                      onClick={() => handleSort('timezone')}
-                    />
-                  </div>
-                </div>
-              </th>
-              <th onClick={() => handleSort('population')}>
-                <div className='column-heading'>
-                  <div>Population</div>
-                  <div className='icons-container'>
-                    <ArrowDownUp
-                      className='arrow-downUp'
-                      onClick={() => handleSort('population')}
-                    /> 
-                  </div>
-                </div>
-              </th>
+              <td>No cities found</td>
             </tr>
-          </thead>
-          <tbody>
-            {filteredCities.length > 0 ? (
-              filteredCities.map((city: City, index: number) => {
-                const isLastCity = index === filteredCities.length - 1;
-                return (
-                  <tr
-                    key={`${city.name}-${index}`}
-                    ref={isLastCity ? lastCityRef : null} // Attach ref to last city for infinite scroll
-                  >
-                    <td>
-                      <Link
-                        to={`/weather/${city.name}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {city.name}
-                      </Link>
-                    </td>
-                    <td>{city.cou_name_en}</td>
-                    <td>{city.timezone}</td>
-                    <td>{city.population}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td>No cities found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -1,18 +1,50 @@
-.header{
+.header {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-.heading{
-    align-self: center;
-}
-.fav-button-container{
-    align-self: flex-end;
-}
-.ul-container{
-    list-style-type: numeric;
-}
-
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f5f5f5; /* or your preferred background color */
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .heading {
+    flex-grow: 1; /* Allows the heading to take up available space */
+    text-align: center;
+  }
+  
+  .fav-button-container {
+    /* Ensures button is aligned properly */
+    display: flex;
+    align-items: center;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff; /* Button color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .fav-button-container {
+      margin-top: 10px;
+    }
+  }
+  
 /* favorite page styles */
 .favorites-wrapper {
     display: flex;
