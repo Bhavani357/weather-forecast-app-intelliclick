@@ -24,8 +24,7 @@ export const CityTable: React.FC = () => {
   const lastCityRef = useRef<HTMLTableRowElement | null>(null);
   const [filters, setFilters] = useState<Partial<Record<keyof City, string>>>({});
   const [popupFilter, setPopupFilter] = useState(false);
-  const [isCrossClicked, setIsCrossClicked] = useState(false);
- 
+  
   const loadedPages = useRef<Set<number>>(new Set());
 
   const loadCities = useCallback(async () => {
@@ -120,10 +119,10 @@ export const CityTable: React.FC = () => {
     });
   }, [sortedCities, filters]);
 
+  const togglePopupFilter = () => {
+    setPopupFilter((prev) => !prev);
+  };
 
-  const handlePopup = ()=>{
-    setPopupFilter(true)
-  }
   const handleFilterChange = (key: keyof City, value: string) => {
     setFilters((prev) => ({
       ...prev,
@@ -131,28 +130,22 @@ export const CityTable: React.FC = () => {
     }));
   };
 
-  const handleCrossMark = ()=>{
-    setIsCrossClicked(true)
-  }
-
-  const popupContainerClassName = isCrossClicked ? 'popup-hidden': 'popup-container';
-
   return (
     <div>
       {popupFilter && (
-        <div className={`${popupContainerClassName}`}>
+        <div className='popup-container'>
           <input type='text' value={filters['name'] || ''}
               onChange={(e) => handleFilterChange('name', e.target.value)}
+              className='popup-input'
               placeholder="Filter by name"/> 
-          <XMarkIcon onClick={handleCrossMark}/>
+          <XMarkIcon onClick={togglePopupFilter}/>
         </div>
       )}
       <div className="main-container">
-        
         <table className="table">
           <thead>
             <tr>
-              <th onClick={() => handleSort('name')}>
+              <th>
                 <div className='column-heading'>
                   <div>City Name</div>
                   <div className='icons-container'>
@@ -162,7 +155,7 @@ export const CityTable: React.FC = () => {
                     />
                     <Filter
                       className='filter-icon'
-                      onClick={handlePopup}
+                      onClick={togglePopupFilter}
                     />
                   </div>
                 </div>
@@ -186,7 +179,6 @@ export const CityTable: React.FC = () => {
                       className='arrow-downUp'
                       onClick={() => handleSort('timezone')}
                     />
-                    
                   </div>
                 </div>
               </th>

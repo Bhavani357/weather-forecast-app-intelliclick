@@ -1,38 +1,51 @@
-
-.active-btn{
-    background-color: rgb(93, 54, 129);
-    color: aliceblue;
-    border: 1px solid blueviolet;
+/* Main container for the table */
+.main-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-table{
+/* Table styling */
+.table {
   width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
 }
-tr th{
-  text-align: left;
+
+/* Table header styling */
+.table thead {
   background-color: blue;
+}
+
+.table th {
+  text-align: left;
   padding: 10px;
   color: white;
 }
-tr td{
+
+.table th,
+.table td {
   padding: 10px;
 }
-tr:nth-child(even){
+
+.table tr:nth-child(even) {
   background-color: lightgray;
 }
-tr:hover{
+
+.table tr:hover {
   background-color: gray;
 }
-select{
-  padding: 10px;
+
+/* Column Heading */
+.column-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.column-heading{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.arrow-downUp{
-    cursor: pointer;
+
+/* Icons */
+.arrow-downUp {
+  cursor: pointer;
 }
 
 .icons-container {
@@ -46,22 +59,65 @@ select{
   margin-left: 8px; 
 }
 
-.filter-container {
-  padding: 10px;
+/* Popup Filter */
+.popup-container {
   display: flex;
   align-items: center;
-}
-
-.popup-container {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   background: white;
   border: 1px solid #ddd;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 .popup-hidden {
   display: none;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .table th, .table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .popup-container {
+    top: 5px;
+    right: 5px;
+    padding: 8px;
+  }
+
+  .filter-icon {
+    font-size: 20px;
+    margin-left: 5px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .table {
+    font-size: 0.8rem;
+  }
+
+  .table th, .table td {
+    padding: 6px;
+  }
+
+  .popup-container {
+    top: 0;
+    right: 0;
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+
+  .filter-icon {
+    font-size: 18px;
+  }
+}
+
+.popup-input{
+  border: none;
+  outline: none;
 }
