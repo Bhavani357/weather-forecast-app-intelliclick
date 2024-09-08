@@ -3,9 +3,9 @@ import { fetchCities } from '../api/citiesApi';
 import { useCities } from '../context/CitiesContext';
 import { City } from '../types/city';
 import { ArrowDownUp, Filter, X as XMarkIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation within the app
 
 import './index.css';
-import { Link } from 'react-router-dom';
 
 type SortOrder = 'asc' | 'desc' | null;
 
@@ -27,6 +27,8 @@ export const CityTable: React.FC = () => {
   const inputRef = useRef<HTMLInputElement | null>(null); // Ref for the input field
   
   const loadedPages = useRef<Set<number>>(new Set());
+  
+  const navigate = useNavigate(); // Use useNavigate for in-app navigation
 
   const loadCities = useCallback(async () => {
     if (loading || !hasMore || loadedPages.current.has(page)) return;
@@ -137,6 +139,16 @@ export const CityTable: React.FC = () => {
     }
   }, [popupFilter]);
 
+  const handleCityClick = (cityName: string, event: React.MouseEvent) => {
+    if (event.button === 0) {
+      // Left-click: navigate to city weather page within the app
+      navigate(`/weather/${cityName}`);
+    } else if (event.button === 1) {
+      // Middle-click or right-click: let the default browser behavior open in a new tab
+      return;
+    }
+  };
+
   return (
     <div className="main-container">
       {popupFilter && (
@@ -213,15 +225,12 @@ export const CityTable: React.FC = () => {
                 <tr
                   key={`${city.name}-${index}`}
                   ref={isLastCity ? lastCityRef : null} // Attach ref to last city for infinite scroll
+                  onClick={(e) => handleCityClick(city.name, e)} // Navigate to city weather page on left-click
                 >
                   <td>
-                    <Link
-                      to={`/weather/${city.name}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <a href={`/weather/${city.name}`}>
                       {city.name}
-                    </Link>
+                    </a>
                   </td>
                   <td>{city.cou_name_en}</td>
                   <td>{city.timezone}</td>
@@ -231,11 +240,12 @@ export const CityTable: React.FC = () => {
             })
           ) : (
             <tr>
-              <td>No cities found</td>
+              <td colSpan={4} className="no-data">No cities available</td>
             </tr>
           )}
         </tbody>
       </table>
+      {loading && <div className="loading">Loading...</div>}
     </div>
   );
 };
