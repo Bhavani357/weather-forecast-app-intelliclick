@@ -5,12 +5,14 @@
   margin: auto;
 }
 
+
 /* Table styling */
 .table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
   font-size: 1rem; /* Default font size for larger screens */
+  overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
 }
 
 /* Table header styling */
@@ -55,7 +57,7 @@
 }
 
 .filter-icon {
-  margin-left: 8px; 
+  margin-left: 8px;
 }
 
 /* Popup Filter */
@@ -79,14 +81,11 @@
   width: 150px;
 }
 
-.popup-hidden {
-  display: none;
-}
-
 /* Responsive styling for mobile large (768px and below) */
 @media (max-width: 768px) {
   .table {
-    font-size: 0.9rem; /* Slightly reduce font size */
+    font-size: 0.9rem;
+    overflow-x: auto; /* Enable horizontal scrolling */
   }
 
   .table th, .table td {
@@ -109,34 +108,21 @@
   }
 
   .popup-input {
-    width: 120px; /* Reduce input width for smaller screens */
+    width: 120px;
   }
-}
-@media (max-width: 420px) {
-  .main-container{
-    align-self: center;
-  }
-  .table{
-    align-self: center;
-  }
+
+  /* Adjust header size for smaller screens */
+
 }
 
-@media (max-width: 480px) {
+/* Responsive styling for tablets (max-width: 600px) */
+@media (max-width: 600px) {
   .table {
-    font-size: 0.8rem; /* Further reduce font size */
+    font-size: 0.85rem;
   }
 
   .table th, .table td {
     padding: 6px;
-  }
-
-  .column-heading {
-    font-size: 0.8rem;
-  }
-
-  .filter-icon {
-    font-size: 18px; 
-    margin-left: 3px;
   }
 
   .popup-container {
@@ -147,14 +133,17 @@
   }
 
   .popup-input {
-    width: 100px; /* Adjust input width further for smaller screens */
+    width: 100px;
   }
+
+  /* Further reduce header size for tablets */
+ 
 }
 
 /* Responsive styling for extra small devices (360px and below) */
 @media (max-width: 360px) {
   .table {
-    font-size: 0.7rem; /* Further reduce font size */
+    font-size: 0.7rem;
   }
 
   .table th, .table td {
@@ -176,6 +165,9 @@
   }
 
   .popup-input {
-    width: 80px; /* Narrower input for very small screens */
+    width: 80px;
   }
+
+  /* Smallest header for very small devices */
+  
 }
