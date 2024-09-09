@@ -10,6 +10,7 @@
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
+  font-size: 1rem; /* Default font size for larger screens */
 }
 
 /* Table header styling */
@@ -23,8 +24,7 @@
   color: white;
 }
 
-.table th,
-.table td {
+.table th, .table td {
   padding: 10px;
 }
 
@@ -44,8 +44,9 @@
 }
 
 /* Icons */
-.arrow-downUp {
+.arrow-downUp, .filter-icon {
   cursor: pointer;
+  font-size: 18px;
 }
 
 .icons-container {
@@ -54,8 +55,6 @@
 }
 
 .filter-icon {
-  cursor: pointer;
-  font-size: 24px;
   margin-left: 8px; 
 }
 
@@ -73,15 +72,34 @@
   z-index: 1000;
 }
 
+.popup-input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  width: 150px;
+}
+
 .popup-hidden {
   display: none;
 }
 
-/* Responsive styling */
+/* Responsive styling for mobile large (768px and below) */
 @media (max-width: 768px) {
+  .table {
+    font-size: 0.9rem; /* Slightly reduce font size */
+  }
+
   .table th, .table td {
     padding: 8px;
+  }
+
+  .column-heading {
     font-size: 0.9rem;
+  }
+
+  .filter-icon {
+    font-size: 20px; 
+    margin-left: 5px;
   }
 
   .popup-container {
@@ -90,19 +108,36 @@
     padding: 8px;
   }
 
-  .filter-icon {
-    font-size: 20px;
-    margin-left: 5px; 
+  .popup-input {
+    width: 120px; /* Reduce input width for smaller screens */
+  }
+}
+@media (max-width: 420px) {
+  .main-container{
+    align-self: center;
+    margin-left: 130px;
+  }
+  .table{
+    align-self: center;
   }
 }
 
 @media (max-width: 480px) {
   .table {
-    font-size: 0.8rem;
+    font-size: 0.8rem; /* Further reduce font size */
   }
 
   .table th, .table td {
     padding: 6px;
+  }
+
+  .column-heading {
+    font-size: 0.8rem;
+  }
+
+  .filter-icon {
+    font-size: 18px; 
+    margin-left: 3px;
   }
 
   .popup-container {
@@ -112,12 +147,36 @@
     font-size: 0.8rem;
   }
 
-  .filter-icon {
-    font-size: 18px;
+  .popup-input {
+    width: 100px; /* Adjust input width further for smaller screens */
   }
 }
 
-.popup-input{
-  border: none;
-  outline: none;
+/* Responsive styling for extra small devices (360px and below) */
+@media (max-width: 360px) {
+  .table {
+    font-size: 0.7rem; /* Further reduce font size */
+  }
+
+  .table th, .table td {
+    padding: 5px;
+  }
+
+  .column-heading {
+    font-size: 0.7rem;
+  }
+
+  .filter-icon {
+    font-size: 16px; 
+    margin-left: 2px;
+  }
+
+  .popup-container {
+    padding: 5px;
+    font-size: 0.7rem;
+  }
+
+  .popup-input {
+    width: 80px; /* Narrower input for very small screens */
+  }
 }

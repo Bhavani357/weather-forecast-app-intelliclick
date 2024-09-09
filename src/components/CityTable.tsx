@@ -154,7 +154,7 @@ export const CityTable: React.FC = () => {
       {popupFilter && (
         <div className='popup-container'>
           <input 
-            ref={inputRef} // Attach ref to the input element
+            ref={inputRef}
             type='text' 
             value={filters['name'] || ''}
             className='popup-input'
